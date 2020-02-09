@@ -33,8 +33,8 @@ namespace Starship_Kneat.Controllers
             //Get all starships
             List<Starship> starships = ApiREST.GetStarship();
 
-            List<StarshipStop> listResult = createListResult(txtMGLT, starships);
-                        
+            List<StarshipStop> listResult = CreateListResult(txtMGLT, starships);
+
             return View("Index", listResult);
         }
 
@@ -45,29 +45,15 @@ namespace Starship_Kneat.Controllers
         /// <param name="MGLTInput">MGLT informed in View</param>
         /// <param name="listStarship"></param>
         /// <returns>Starship List</returns>
-        public List<StarshipStop> createListResult(string MGLTInput, List<Starship> listStarship)
+        public List<StarshipStop> CreateListResult(string MGLTInput, List<Starship> listStarship)
         {
             List<StarshipStop> listResult = new List<StarshipStop>();
 
             foreach (var item in listStarship)
             {
-                string consumables = item.Consumables;
                 int stops = 0;
-                string[] consumablesSplit = consumables.Split(' ');
 
-                int number = Convert.ToInt32(consumablesSplit[0]);
-                string strTime = consumablesSplit[1];
-
-                //Identifies the unit of days(years, months, weeks or days) and get the correct numbers of days. 
-                int consumablesDays = util.getDays(strTime);
-
-                //Considering that the MGLT is per hour, multiplied by the total number of days that can 
-                //supply consumables for the entire crew without the need for refueling and multiplied by 24 hours (1 day).
-                int totalHours = (number * consumablesDays * 24);
-                
-                //Calculates the stops number of a starship
-                stops = Convert.ToInt32(Convert.ToInt32(MGLTInput) / (totalHours * Convert.ToInt32(item.MGLT)));
-
+                stops = util.CalculateStops(Convert.ToInt32(MGLTInput), item);
 
                 if (stops >= 0)
                     listResult.Add(new StarshipStop() { StarshipName = item.Name, Stops = stops });
