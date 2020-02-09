@@ -30,7 +30,7 @@ namespace Starship_Kneat.Controllers
 
         public IActionResult Calculate(string txtMGLT)
         {
-            //Get in all starships
+            //Get all starships
             List<Starship> starships = ApiREST.GetStarship();
 
             List<StarshipStop> listResult = createListResult(txtMGLT, starships);
@@ -45,7 +45,7 @@ namespace Starship_Kneat.Controllers
         /// <param name="MGLTView"></param>
         /// <param name="listStarship"></param>
         /// <param name="listResult"></param>
-        /// <returns></returns>
+        /// <returns>Starship List</returns>
         public List<StarshipStop> createListResult(string MGLTInput, List<Starship> listStarship)
         {
             List<StarshipStop> listResult = new List<StarshipStop>();
