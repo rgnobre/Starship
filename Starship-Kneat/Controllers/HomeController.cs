@@ -46,7 +46,7 @@ namespace Starship_Kneat.Controllers
         /// <param name="listStarship"></param>
         /// <param name="listResult"></param>
         /// <returns></returns>
-        public List<StarshipStop> createListResult(string MGLTView, List<Starship> listStarship)
+        public List<StarshipStop> createListResult(string MGLTInput, List<Starship> listStarship)
         {
             List<StarshipStop> listResult = new List<StarshipStop>();
 
@@ -58,9 +58,17 @@ namespace Starship_Kneat.Controllers
 
                 int number = Convert.ToInt32(consumablesSplit[0]);
                 string strTime = consumablesSplit[1];
+
+                //Identifies the unit of days(years, months, weeks or days) and get the correct numbers of days. 
                 int consumablesDays = util.getDays(strTime);
 
-                stops = Convert.ToInt32(Convert.ToInt32(MGLTView) / (number * consumablesDays * 24 * Convert.ToInt32(item.MGLT)));
+                //Considering that the MGLT is per hour, multiplied by the total number of days that can 
+                //supply consumables for the entire crew without the need for refueling and multiplied by 24 hours (1 day).
+                int totalHours = (number * consumablesDays * 24);
+                
+                //Calculates the stops number of a starship
+                stops = Convert.ToInt32(Convert.ToInt32(MGLTInput) / (totalHours * Convert.ToInt32(item.MGLT)));
+
 
                 if (stops >= 0)
                     listResult.Add(new StarshipStop() { StarshipName = item.Name, Stops = stops });
