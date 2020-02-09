@@ -57,5 +57,26 @@ namespace Starship_Kneat.Models
             
             return Convert.ToInt32(Convert.ToInt32(distance) / (totalHours * Convert.ToInt32(item.MGLT)));
         }
+
+        /// <summary>
+        /// Creating List with Starship stops
+        /// </summary>
+        /// <param name="MGLTInput">MGLT informed in View</param>
+        /// <param name="listStarship"></param>
+        /// <returns>Starship List</returns>
+        public List<StarshipStop> CreateListResult(string MGLTInput, List<Starship> listStarship)
+        {
+            List<StarshipStop> listResult = new List<StarshipStop>();
+
+            foreach (var item in listStarship)
+            {                
+                var stops = CalculateStops(Convert.ToInt32(MGLTInput), item);
+
+                if (stops >= 0)
+                    listResult.Add(new StarshipStop() { StarshipName = item.Name, Stops = stops });
+            }
+
+            return listResult;
+        }
     }
 }

@@ -33,33 +33,12 @@ namespace Starship_Kneat.Controllers
             //Get all starships
             List<Starship> starships = ApiREST.GetStarship();
 
-            List<StarshipStop> listResult = CreateListResult(txtMGLT, starships);
+            List<StarshipStop> listResult = util.CreateListResult(txtMGLT, starships);
 
             return View("Index", listResult);
         }
 
 
-        /// <summary>
-        /// Creating List with Starship stops
-        /// </summary>
-        /// <param name="MGLTInput">MGLT informed in View</param>
-        /// <param name="listStarship"></param>
-        /// <returns>Starship List</returns>
-        public List<StarshipStop> CreateListResult(string MGLTInput, List<Starship> listStarship)
-        {
-            List<StarshipStop> listResult = new List<StarshipStop>();
-
-            foreach (var item in listStarship)
-            {
-                int stops = 0;
-
-                stops = util.CalculateStops(Convert.ToInt32(MGLTInput), item);
-
-                if (stops >= 0)
-                    listResult.Add(new StarshipStop() { StarshipName = item.Name, Stops = stops });
-            }
-
-            return listResult;
-        }
+       
     }
 }
