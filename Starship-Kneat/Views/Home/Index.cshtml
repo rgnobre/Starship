@@ -1,0 +1,44 @@
+﻿@model List<Starship_Kneat.Models.StarshipStop>
+@{
+    ViewData["Title"] = "StarShip";
+}
+
+
+<div>
+    @using (Html.BeginForm("Calculate", "Home", FormMethod.Get))
+    {
+        <div class="row">
+            <div class="col-10">
+                @Html.TextBox("txtMGLT", null, new { @class = "form-control mr-sm-2", @placeholder = "Distance(MGLT)" })
+            </div>
+            <div class="col-2">
+                <button class="btn btn-dark btn-rounded" type="submit">Calculate</button>
+            </div>
+        </div>
+    }
+    <br />
+
+    @if (Model != null && Model.Count > 0)
+    {
+        <table class="table table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Starship</th>
+                    <th scope="col">Stops</th>
+                </tr>
+            </thead>
+            <tbody class="table-striped">
+
+                @foreach (var starship in Model)
+                {
+                    <tr>
+                        <td>@String.Format("{0}", starship.StarshipName)</td>
+                        <td>@String.Format("{0}", starship.Stops)</td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    }
+
+</div>
