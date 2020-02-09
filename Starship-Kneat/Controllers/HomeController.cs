@@ -42,9 +42,8 @@ namespace Starship_Kneat.Controllers
         /// <summary>
         /// Creating List with Starship stops
         /// </summary>
-        /// <param name="MGLTView"></param>
+        /// <param name="MGLTInput">MGLT informed in View</param>
         /// <param name="listStarship"></param>
-        /// <param name="listResult"></param>
         /// <returns>Starship List</returns>
         public List<StarshipStop> createListResult(string MGLTInput, List<Starship> listStarship)
         {
